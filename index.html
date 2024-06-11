@@ -1,96 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulsePals - Your Health Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-family: 'Times New Roman', Times, serif;
+      color: #003366;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: #666;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .content {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      margin-bottom: 30px;
+      text-align: left;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+      position: relative;
+    }
+
+    .feature h2 {
+      color: #003366;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5em;
+    }
+
+    .feature p {
+      color: #333;
+    }
+
+    .heart-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2em;
+      color: #ff69b4;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      width: calc(100% - 40px);
+      max-width: 500px;
+      background-color: #003366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      border: none;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .btn:hover {
+      background-color: #001a33;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #003366;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .summary {
+      text-align: left;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+      margin-bottom: 20px;
+    }
+
+    .summary h2 {
+      color: #003366;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5em;
+    }
+
+    .summary p {
+      color: #333;
+    }
+
+    .summary span {
+      font-weight: bold;
+    }
+
+    .summary ul {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="homePage">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="feature">
+        <span class="heart-icon">♥</span>
+        <h2>Generate Your Health Analysis</h2>
+        <p>Connect Your Smartwatch for Personalized Insights: Easily input your health data to our website and unlock detailed analysis, empowering you to make informed decisions about your well-being!</p>
+      </div>
+      <div class="feature">
+        <span class="heart-icon">♥</span>
+        <h2>Goal Tracking</h2>
+        <p>Track Your Progress and Achieve Your Goals: Set, monitor, and achieve your health and fitness goals effortlessly. Stay motivated with clear progress updates and personalized milestones.</p>
+      </div>
+    </div>
+    <div class="cta">
+      <a href="#" class="btn" onclick="showLoginPage()">Get Started</a>
+    </div>
+  </div>
+
+  <div class="container" id="loginPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Login to PulsePals</h2>
+        <form id="loginForm">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required><br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required><br><br>
+          <button type="submit" class="btn">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="healthSummaryPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="summary">
+        <h2>Health Summary</h2>
+        <p><span>Steps Taken:</span> 10,000</p>
+        <p><span>Heart Rate:</span> 72 bpm</p>
+        <p><span>Heartbeats Count Per Minute:</span> 87</p>
+        <p><span>Moods Experienced Throughout the Day:</span></p>
+        <ul>
+          <li>Excited</li>
+          <li>Happy</li>
+          <li>Exhausted</li>
+          <p><span>. . . </span></p>
+        </ul>
+      </div>
+      <div class="cta">
+        <a href="#" class="btn">View More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase initialization script -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "pulsepals-c211c.firebaseapp.com",
+      projectId: "pulsepals-c211c",
+      storageBucket: "pulsepals-c211c.appspot.com",
+      messagingSenderId: "475129408953",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    var auth = firebase.auth();
+
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(function() {
+          showHealthSummaryPage();
+        })
+        .catch(function(error) {
+          alert("Error: " + error.message);
+        });
+    });
+  </script>
+
+  <!-- JavaScript to handle page navigation -->
+  <script>
+    function showLoginPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'block';
+    }
+
+    function showHealthSummaryPage() {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('healthSummaryPage').style.display = 'block';
+    }
+  </script>
+</body>
+
 </html>
