@@ -329,24 +329,37 @@
 
   <!-- JavaScript to handle page navigation -->
   <script>
-    function showLoginPage() {
-      document.getElementById('homePage').style.display = 'none';
-      document.getElementById('loginPage').style.display = 'block';
-      document.getElementById('signUpPage').style.display = 'none';
-    }
+  // Your existing showLoginPage() function remains unchanged
 
-    function showSignUpPage() {
-      document.getElementById('homePage').style.display = 'none';
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('signUpPage').style.display = 'block';
-    }
+  function showHealthSummaryPage() {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('healthSummaryPage').style.display = 'block';
+  }
 
-    function showHealthSummaryPage() {
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('healthSummaryPage').style.display = 'block';
-      document.getElementById('signUpPage').style.display = 'none';
-    }
+  // Firebase Authentication
+  const auth = firebase.auth();
+
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log('Login successful:', user);
+        showHealthSummaryPage(); // Redirect to the health summary page
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Error logging in:', errorCode, errorMessage);
+        alert('Error logging in: ' + errorMessage);
+      });
+  });
   </script>
+
 </body>
 
 </html>
