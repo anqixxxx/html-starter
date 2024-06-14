@@ -266,7 +266,9 @@
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const analytics = firebase.analytics(app);
+    const auth = firebase.auth();
 
+    // Page navigation functions
     function showLoginPage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'block';
@@ -280,13 +282,13 @@
     }
 
     function showHealthSummaryPage() {
+      document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signUpPage').style.display = 'none';
       document.getElementById('healthSummaryPage').style.display = 'block';
     }
 
     // Firebase Authentication
-    const auth = firebase.auth();
-
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const email = e.target.email.value;
@@ -326,40 +328,6 @@
         });
     }
   </script>
-
-  <!-- JavaScript to handle page navigation -->
-  <script>
-  // Your existing showLoginPage() function remains unchanged
-
-  function showHealthSummaryPage() {
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('healthSummaryPage').style.display = 'block';
-  }
-
-  // Firebase Authentication
-  const auth = firebase.auth();
-
-  document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
-    auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log('Login successful:', user);
-        showHealthSummaryPage(); // Redirect to the health summary page
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error logging in:', errorCode, errorMessage);
-        alert('Error logging in: ' + errorMessage);
-      });
-  });
-  </script>
-
 </body>
 
 </html>
