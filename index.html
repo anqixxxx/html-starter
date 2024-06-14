@@ -7,13 +7,175 @@
   <title>PulsePals - Your Health Companion</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
-    /* Your existing CSS styles */
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-family: 'Times New Roman', Times, serif;
+      color: #003366;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: #666;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .content {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      margin-bottom: 30px;
+      text-align: left;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+      position: relative;
+    }
+
+    .feature h2 {
+      color: #003366;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5em;
+    }
+
+    .feature p {
+      color: #333;
+    }
+
+    .heart-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2em;
+      color: #ff69b4;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      width: calc(100% - 40px);
+      max-width: 500px;
+      background-color: #003366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      border: none;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .btn:hover {
+      background-color: #001a33;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #003366;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .summary {
+      text-align: left;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+      margin-bottom: 20px;
+    }
+
+    .summary h2 {
+      color: #003366;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5em;
+    }
+
+    .summary p {
+      color: #333;
+    }
+
+    .summary span {
+      font-weight: bold;
+    }
+
+    .summary ul {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
   </style>
 </head>
 
 <body>
   <div class="container" id="homePage">
-    <!-- Your existing home page content -->
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="feature">
+        <span class="heart-icon">♥</span>
+        <h2>Generate Your Health Analysis</h2>
+        <p>Connect Your Smartwatch for Personalized Insights: Easily input your health data to our website and unlock detailed analysis, empowering you to make informed decisions about your well-being!</p>
+      </div>
+      <div class="feature">
+        <span class="heart-icon">♥</span>
+        <h2>Goal Tracking</h2>
+        <p>Track Your Progress and Achieve Your Goals: Set, monitor, and achieve your health and fitness goals effortlessly. Stay motivated with clear progress updates and personalized milestones.</p>
+      </div>
+    </div>
     <div class="cta">
       <a href="#" class="btn" onclick="showLoginPage()">Get Started</a>
       <a href="#" class="btn" onclick="showSignUpPage()">Sign Up</a>
@@ -21,7 +183,11 @@
   </div>
 
   <div class="container" id="loginPage" style="display: none;">
-    <!-- Your existing login page content -->
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
     <div class="content">
       <div class="form-container">
         <h2>Login to PulsePals</h2>
@@ -37,7 +203,11 @@
   </div>
 
   <div class="container" id="signUpPage" style="display: none;">
-    <!-- Your existing sign up page content -->
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
     <div class="content">
       <div class="form-container">
         <h2>Sign Up for PulsePals</h2>
@@ -53,11 +223,47 @@
   </div>
 
   <div class="container" id="heartRatePage" style="display: none;">
-    <!-- Your existing heart rate page content -->
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Enter Your Average Heart Rate</h2>
+        <form id="heartRateForm">
+          <label for="heartRate">Average Heart Rate (bpm):</label>
+          <input type="number" id="heartRate" name="heartRate" required><br><br>
+          <button type="submit" class="btn">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <div class="container" id="healthSummaryPage" style="display: none;">
-    <!-- Your existing health summary page content -->
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="summary">
+        <h2>Health Summary</h2>
+        <p><span>Steps Taken:</span> 10,000</p>
+        <p><span>Heart Rate:</span> 72 bpm</p>
+        <p><span>Heartbeats Count Per Minute:</span> 87</p>
+        <p><span>Moods Experienced Throughout the Day:</span></p>
+        <ul>
+          <li>Excited</li>
+          <li>Happy</li>
+          <li>Exhausted</li>
+          <p><span>. . . </span></p>
+        </ul>
+      </div>
+      <div class="cta">
+        <a href="#" class="btn">Back to Home</a>
+      </div>
+    </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
