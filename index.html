@@ -272,7 +272,7 @@
       const auth0 = await createAuth0Client({
         domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
         client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ',
-        redirect_uri: 'https://vercel.com/anqis-projects-d8885076/ppheartrate/wNE9YpNFwxb8e3a7zRoAYjfp8FMt'
+        redirect_uri: 'https://ppheartrate-jpy6sogyz-anqis-projects-d8885076.vercel.app/'
       });
   
       document.getElementById('loginForm').addEventListener('submit', async function (e) {
@@ -282,8 +282,8 @@
   
         try {
           await auth0.loginWithRedirect({
-            redirect_uri: 'https://vercel.com/anqis-projects-d8885076/ppheartrate/wNE9YpNFwxb8e3a7zRoAYjfp8FMt',
-            appState: { targetUrl: 'https://vercel.com/anqis-projects-d8885076/ppheartrate/wNE9YpNFwxb8e3a7zRoAYjfp8FMt' }
+            redirect_uri: 'https://ppheartrate-jpy6sogyz-anqis-projects-d8885076.vercel.app/',
+            appState: { targetUrl: 'https://ppheartrate-jpy6sogyz-anqis-projects-d8885076.vercel.app/' }
           });
           console.log('Login successful');
         } catch (error) {
