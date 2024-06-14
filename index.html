@@ -308,26 +308,34 @@
     }
 
     function showSignUpPage() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'dev-doizuip1rh4wvs74.us.auth0.com', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function () {
-            if (this.status >= 200 && this.status < 400) {
-                // Success!
-                var resp = JSON.parse(this.response);
-                console.log(resp);
-            } else {
-                // Error :(
-                console.error(this.response);
+        document.getElementById('signUpForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+
+            try {
+                await auth0.signup({
+                    connection: 'Username-Password-Authentication',
+                    email: email,
+                    password: password
+                });
+
+                console.log('Signup successful');
+                // After successful signup, you can redirect the user to the login page
+                auth0.loginWithRedirect({
+                    redirect_uri: 'https://ppheartrate-jpy6sogyz-anqis-projects-d8885076.vercel.app/',
+                    audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
+                    scope: 'openid email',
+                    response_type: 'code',
+                    realm: 'Username-Password-Authentication',
+                    username: email,
+                    password: password
+                });
+            } catch (error) {
+                console.error('Error signing up:', error);
+                alert('Error signing up: ' + error.message);
             }
-        };
-        xhr.send(JSON.stringify({
-        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ',
-        email: email,
-        password: password,
-        connection: 'Username-Password-Authentication',
-        user_metadata: { plan: 'silver' }
-        }));
+        });
     }
 
     function showHeartRatePage() {
