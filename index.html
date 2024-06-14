@@ -268,7 +268,19 @@
 
   <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
   <script>
-    let auth0;
+    let auth0 = null;
+
+    async function initAuth0() {
+        auth0 = await createAuth0Client({
+            domain: 'YOUR_AUTH0_DOMAIN',
+            client_id: 'YOUR_AUTH0_CLIENT_ID'
+        });
+    }
+
+    window.onload = async () => {
+        await initAuth0();
+        // Now you can use auth0
+    };
 
     document.addEventListener('DOMContentLoaded', async () => {
       const auth0 = await createAuth0Client({
