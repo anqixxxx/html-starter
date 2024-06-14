@@ -334,15 +334,7 @@
             const password = e.target.password.value;
 
             try {
-                await auth0.signup({
-                    connection: 'Username-Password-Authentication',
-                    email: email,
-                    password: password
-                });
-
-                console.log('Signup successful');
-                // After successful signup, you can redirect the user to the login page
-                auth0.loginWithRedirect({
+                await auth0.loginWithRedirect({
                     redirect_uri: 'https://ppheartrate-jpy6sogyz-anqis-projects-d8885076.vercel.app/',
                     audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
                     scope: 'openid email',
