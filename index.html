@@ -374,6 +374,26 @@
       showHealthSummaryPage();
     });
   </script>
+
+  <script>
+    var config = JSON.parse(decodeURIComponent(escape(window.atob('@@config@@'))));
+    config.extraParams = config.extraParams || {};
+    var connection = config.connection;
+    var prompt = config.prompt;
+    var languageDictionary;
+    var language;
+  
+    if (config.dict && config.dict.signin && config.dict.signin.title) {
+      languageDictionary = { title: config.dict.signin.title };
+    } else if (typeof config.dict === 'string') {
+      language = config.dict;
+    }
+    var loginHint = config.extraParams.login_hint;
+  
+    // Add this line
+    config.redirectUri = "https://vercel.com/anqis-projects-d8885076/ppheartrate/wNE9YpNFwxb8e3a7zRoAYjfp8FMt";
+  
+  </script>
 </body>
 
 </html>
