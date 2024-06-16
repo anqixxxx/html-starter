@@ -285,7 +285,7 @@
       const auth0 = await createAuth0Client({
         domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
         client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ',
-        redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app'
+        redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/'
       });
   
       document.getElementById('loginForm').addEventListener('submit', async function (e) {
@@ -295,7 +295,7 @@
   
         try {
           await auth0.loginWithRedirect({
-            redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app',
+            redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
             audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
             scope: 'openid email',
             response_type: 'code',
@@ -334,7 +334,7 @@
 
             try {
                 await auth0.loginWithRedirect({
-                    redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app',
+                    redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
                     audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
                     scope: 'openid email',
                     response_type: 'code',
@@ -373,7 +373,7 @@
 
     try {
         await auth0.loginWithRedirect({
-        redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app',
+        redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
         audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
         scope: 'openid email',
         response_type: 'code',
@@ -403,7 +403,7 @@
         console.log('Signup successful');
         // After successful signup, you can redirect the user to the login page
         auth0.loginWithRedirect({
-            redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app',
+            redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
             audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
             scope: 'openid email',
             response_type: 'code',
@@ -435,7 +435,7 @@
     var loginHint = config.extraParams.login_hint;
   
     // Add this line
-    config.redirectUri = "https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app";
+    config.redirectUri = "https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/";
   
   </script>
 </body>
