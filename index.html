@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PulsePals - Your Health Companion</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <style>
     body {
       font-family: 'Times New Roman', Times, serif;
@@ -13,7 +13,7 @@
       padding: 0;
       background-color: #ffffff;
     }
-
+    
     .container {
       max-width: 1200px;
       margin: 20px auto;
@@ -127,6 +127,11 @@
       box-sizing: border-box;
     }
 
+    .error {
+      color: red;
+      margin-bottom: 15px;
+    }
+
     .summary {
       text-align: left;
       padding: 20px;
@@ -157,7 +162,7 @@
   </style>
 </head>
 
-<body>
+<<body>
   <div class="container" id="homePage">
     <div class="header">
       &#10084; <!-- Heart Icon -->
@@ -182,6 +187,7 @@
     </div>
   </div>
 
+
   <div class="container" id="loginPage" style="display: none;">
     <div class="header">
       &#10084; <!-- Heart Icon -->
@@ -191,6 +197,7 @@
     <div class="content">
       <div class="form-container">
         <h2>Login to PulsePals</h2>
+        <div id="loginError" class="alert alert-danger" style="display:none;"></div>
         <form id="loginForm">
           <label for="email">Email:</label>
           <input type="email" id="email" name="email" required><br><br>
@@ -198,6 +205,7 @@
           <input type="password" id="password" name="password" required><br><br>
           <button type="submit" class="btn">Login</button>
         </form>
+        <button type="button" class="btn btn-default btn-block" onclick="loginWithGoogle()">Log In with Google</button>
       </div>
     </div>
   </div>
@@ -211,6 +219,7 @@
     <div class="content">
       <div class="form-container">
         <h2>Sign Up for PulsePals</h2>
+        <div id="signUpError" class="alert alert-danger" style="display:none;"></div>
         <form id="signUpForm">
           <label for="signUpEmail">Email:</label>
           <input type="email" id="signUpEmail" name="email" required><br><br>
@@ -240,254 +249,111 @@
     </div>
   </div>
 
-  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0/9.18/auth0.min.js"></script>
   <script>
-    let auth0 = null;
-
     async function initAuth0() {
-        auth0 = await createAuth0Client({
-            domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
-            client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
-        });
+      auth0 = await createAuth0Client({
+        domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
+        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
+      });
+
+      await handleRedirectCallback();
+
+      const isAuthenticated = await auth0.isAuthenticated();
+      if (isAuthenticated) {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('heartRatePage').style.display = 'block';
+      }
     }
 
-    window.onload = async () => {
-        await initAuth0();
-    };
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      const auth0 = await createAuth0Client({
-        domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
-        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ',
-        redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/'
-      });
-  
-      document.getElementById('loginForm').addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-  
+    async function handleRedirectCallback() {
+      const query = window.location.search;
+      if (query.includes('code=') && query.includes('state=')) {
         try {
-          await auth0.loginWithRedirect({
-            redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
-            audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
-            scope: 'openid email',
-            response_type: 'code',
-            realm: 'Username-Password-Authentication',
-            username: email,
-            password: password
-          });
-          console.log('Login successful');
+          await auth0.handleRedirectCallback();
+          window.history.replaceState({}, document.title, "/");
+          const user = await auth0.getUser();
+          console.log("User:", user);
         } catch (error) {
-          console.error('Error logging in:', error);
-          alert('Error logging in: ' + error.message);
+          console.error("Error during authentication:", error);
+          document.getElementById('loginError').textContent = "Login failed: " + error.error_description;
+          showLoginPage();
         }
-      });
-    });
+      }
+    }
 
-    // Page navigation functions
     function showLoginPage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'block';
       document.getElementById('signUpPage').style.display = 'none';
       document.getElementById('heartRatePage').style.display = 'none';
-      document.getElementById('healthSummaryPage').style.display = 'none';
     }
 
     function showSignUpPage() {
-        document.getElementById('homePage').style.display = 'none';
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('signUpPage').style.display = 'block';
-        document.getElementById('heartRatePage').style.display = 'none';
-        document.getElementById('healthSummaryPage').style.display = 'none';
-
-        document.getElementById('signUpForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-
-            try {
-              await auth0.loginWithRedirect({
-                  redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
-                  audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
-                  scope: 'openid email',
-                  response_type: 'code',
-                  realm: 'Username-Password-Authentication',
-                  username: email,
-                  password: password
-              });
-            } catch (error) {
-              console.error('Error signing up:', error);
-              alert('Error signing up: ' + error.message);
-            }
-        });
-    }
-
-    function showHeartRatePage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('signUpPage').style.display = 'none';
-      document.getElementById('heartRatePage').style.display = 'block';
-      document.getElementById('healthSummaryPage').style.display = 'none';
+      document.getElementById('signUpPage').style.display = 'block';
+      document.getElementById('heartRatePage').style.display = 'none';
     }
 
-    // Firebase Authentication
-  document.getElementById('loginForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    async function login(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-    try {
-      await auth0.loginWithRedirect({
-      redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
-      audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
-      scope: 'openid email',
-      response_type: 'code',
-      realm: 'Username-Password-Authentication',
-      username: email,
-      password: password
-      });
-      console.log('Login successful');
-    } catch (error) {
-      console.error('Error logging in:', error);
-      alert('Error logging in: ' + error.message);
-    }
-  });
-
-  document.getElementById('signupForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
-    try {
-      await auth0.signup({
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin,
           connection: 'Username-Password-Authentication',
-          email: email,
-          password: password
-      });
-
-      console.log('Signup successful');
-      // After successful signup, you can redirect the user to the login page
-      auth0.loginWithRedirect({
-          redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
-          audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
-          scope: 'openid email',
-          response_type: 'code',
-          realm: 'Username-Password-Authentication',
           username: email,
           password: password
-      });
-    } catch (error) {
-    console.error('Error signing up:', error);
-    alert('Error signing up: ' + error.message);
+        });
+      } catch (error) {
+        console.error("Login error:", error);
+        document.getElementById('loginError').textContent = "Login failed: " + error.error_description;
+        document.getElementById('loginError').style.display = 'block';
+      }
     }
-  });
-  </script>
 
-  <script>
-    const fetchAuthConfig = () => fetch("/auth_config.json");
+    async function signup(event) {
+      event.preventDefault();
+      const email = document.getElementById('signUpEmail').value;
+      const password = document.getElementById('signUpPassword').value;
 
-    const configureClient = async () => {
-      const response = await fetchAuthConfig();
-      const config = await response.json();
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin,
+          connection: 'Username-Password-Authentication',
+          email: email,
+          password: password,
+          screen_hint: 'signup'
+        });
+      } catch (error) {
+        console.error("Signup error:", error);
+        document.getElementById('signUpError').textContent = "Signup failed: " + error.error_description;
+        document.getElementById('signUpError').style.display = 'block';
+      }
+    }
 
-      auth0 = await createAuth0Client({
-        domain: process.env.AUTH0_DOMAIN,
-        client_id: process.env.AUTH0_CLIENTID,
-        redirect_uri: 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/'
-      });
-    };
+    async function loginWithGoogle() {
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin,
+          connection: 'google-oauth2'
+        });
+      } catch (error) {
+        console.error("Google login error:", error);
+        document.getElementById('loginError').textContent = "Google login failed: " + error.error_description;
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
 
     window.onload = async () => {
-      await configureClient();
-      updateUI();
-
-      const isAuthenticated = await auth0.isAuthenticated();
-
-      if (isAuthenticated) {
-        // show the gated content
-        return;
-      }
-
-      const query = window.location.search;
-      if (query.includes("code=") && query.includes("state=")) {
-        await auth0.handleRedirectCallback();
-        updateUI();
-        window.history.replaceState({}, document.title, "/");
-      }
-
-      // Attach event listeners to the forms
-      document.getElementById('loginForm').addEventListener('submit', login);
-      document.getElementById('signUpForm').addEventListener('submit', signup);
+      await initAuth0();
     };
 
-    const updateUI = async () => {
-      const isAuthenticated = await auth0.isAuthenticated();
-
-      document.getElementById("btn-logout").disabled = !isAuthenticated;
-      document.getElementById("btn-login").disabled = isAuthenticated;
-
-      if (isAuthenticated) {
-        document.getElementById("gated-content").classList.remove("hidden");
-
-        document.getElementById(
-          "ipt-access-token"
-        ).innerHTML = await auth0.getTokenSilently();
-
-        document.getElementById("ipt-user-profile").textContent = JSON.stringify(
-          await auth0.getUser()
-        );
-
-      } else {
-        document.getElementById("gated-content").classList.add("hidden");
-      }
-    };
-
-    const login = async (e) => {
-      e.preventDefault();
-      const email = e.target.email.value;
-      const password = e.target.password.value;
-
-      await auth0.loginWithRedirect({
-        redirect_uri: 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/',
-        audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
-        scope: 'openid email',
-        response_type: 'code',
-        realm: 'Username-Password-Authentication',
-        username: email,
-        password: password
-      });
-    };
-
-    const signup = async (e) => {
-      e.preventDefault();
-      const email = e.target.email.value;
-      const password = e.target.password.value;
-
-    await auth0.signup({
-      connection: 'Username-Password-Authentication',
-      email: email,
-      password: password
-    });
-
-    // After successful signup, you can redirect the user to the login page
-    auth0.loginWithRedirect({
-      redirect_uri: 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/',
-      audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
-      scope: 'openid email',
-      response_type: 'code',
-      realm: 'Username-Password-Authentication',
-      username: email,
-      password: password
-    });
-  };
-
-  const logout = () => {
-    auth0.logout({
-      returnTo: window.location.origin
-    });
-  };
+    document.getElementById('loginForm').addEventListener('submit', login);
+    document.getElementById('signUpForm').addEventListener('submit', signup);
   </script>
 </body>
-
 </html>
