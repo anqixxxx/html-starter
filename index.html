@@ -254,8 +254,8 @@
 
     async function initAuth0() {
       auth0 = await createAuth0Client({
-        domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
-        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
+        domain: 'dev-i9tk0c4dd6qxiywy.us.auth0.com',
+        client_id: 'F2CkhCGoHYZvXt38Vw6hvLHFZm0oPxQ'
       });
 
       await handleRedirectCallback();
@@ -304,7 +304,7 @@
 
       try {
         await auth0.loginWithRedirect({
-          redirect_uri: https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/,
+          redirect_uri: window.location.origin,
           connection: 'Username-Password-Authentication',
           username: email,
           password: password
@@ -329,7 +329,7 @@
           password: password,
         });
         await auth0.loginWithRedirect({
-          redirect_uri: https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/,
+          redirect_uri: window.location.origin,
           connection: 'Username-Password-Authentication',
           username: email,
           password: password
@@ -363,4 +363,5 @@
   </script>
 </body>
 </html>
+
 
