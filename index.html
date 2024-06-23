@@ -1,151 +1,366 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Sign In with Auth0</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulsePals - Your Health Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
   <style>
-    body, html {
-      height: 100%;
-      background-color: #f9f9f9;
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
     }
     
-    .login-container {
-      position: relative;
-      height: 100%;
-    }
-    
-    .login-box {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 15px;
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
       background-color: #fff;
-      box-shadow: 0px 5px 5px #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
-      border-top: 1px solid #e9e9e9;
     }
-    
-    .login-header {
+
+    .header {
       text-align: center;
+      margin-bottom: 20px;
     }
-    
-    .login-header img {
-      width: 75px;
+
+    .logo {
+      width: 150px;
+      margin-bottom: 10px;
     }
-    
-    #error-message {
-      display: none;
-    }      
+
+    .header h1 {
+      font-family: 'Times New Roman', Times, serif;
+      color: #003366;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: #666;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .content {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      margin-bottom: 30px;
+      text-align: left;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+      position: relative;
+    }
+
+    .feature h2 {
+      color: #003366;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5em;
+    }
+
+    .feature p {
+      color: #333;
+    }
+
+    .heart-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2em;
+      color: #ff69b4;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      width: calc(100% - 40px);
+      max-width: 500px;
+      background-color: #003366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      border: none;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .btn:hover {
+      background-color: #001a33;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #003366;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .error {
+      color: red;
+      margin-bottom: 15px;
+    }
+
+    .summary {
+      text-align: left;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      background-color: #cfe2ff;
+      margin-bottom: 20px;
+    }
+
+    .summary h2 {
+      color: #003366;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5em;
+    }
+
+    .summary p {
+      color: #333;
+    }
+
+    .summary span {
+      font-weight: bold;
+    }
+
+    .summary ul {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
   </style>
-<body>  
-  <div class="login-container">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-4 login-box">
-      <div class="login-header">
-        <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg"/>
-        <h3>Welcome</h3>
-        <h5>PLEASE LOG IN</h5>
+</head>
+
+<body>
+  <div class="container" id="homePage">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="feature">
+        <span class="heart-icon">♥</span>
+        <h2>Generate Your Health Analysis</h2>
+        <p>Connect Your Smartwatch for Personalized Insights: Easily input your health data to our website and unlock detailed analysis, empowering you to make informed decisions about your well-being!</p>
       </div>
-      <div id="error-message" class="alert alert-danger"></div>
-      <form id="loginForm">
-        <div class="form-group">
-         <label for="email">Email</label>
-          <input type="text" class="form-control" id="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
-        </div>
-        <button type="submit" id="btn-login" class="btn btn-primary btn-block">Log In</button>
-        <button type="button" id="btn-signup" class="btn btn-default btn-block">Sign Up</button>
-        <hr>
-        <button type="button" id="btn-google" class="btn btn-default btn-danger btn-block">Log In with Google</button>
-      </form>
+      <div class="feature">
+        <span class="heart-icon">♥</span>
+        <h2>Goal Tracking</h2>
+        <p>Track Your Progress and Achieve Your Goals: Set, monitor, and achieve your health and fitness goals effortlessly. Stay motivated with clear progress updates and personalized milestones.</p>
+      </div>
+    </div>
+    <div class="cta">
+      <a href="#" class="btn" onclick="showLoginPage()">Get Started</a>
+      <a href="#" class="btn" onclick="showSignUpPage(); return false;">Sign Up</a>
+    </div>
+  </div>
+
+  <div class="container" id="loginPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Login to PulsePals</h2>
+        <div id="loginError" class="alert alert-danger" style="display:none;"></div>
+        <form id="loginForm">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required><br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required><br><br>
+          <button type="submit" class="btn">Login</button>
+        </form>
+        <button type="button" class="btn btn-default btn-block" onclick="loginWithGoogle()">Log In with Google</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="signUpPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Sign Up for PulsePals</h2>
+        <div id="signUpError" class="alert alert-danger" style="display:none;"></div>
+        <form id="signUpForm">
+          <label for="signUpEmail">Email:</label>
+          <input type="email" id="signUpEmail" name="email" required><br><br>
+          <label for="signUpPassword">Password:</label>
+          <input type="password" id="signUpPassword" name="password" required><br><br>
+          <button type="submit" class="btn">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="heartRatePage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Enter Your Average Heart Rate</h2>
+        <form id="heartRateForm">
+          <label for="heartRate">Average Heart Rate (bpm):</label>
+          <input type="number" id="heartRate" name="heartRate" required><br><br>
+          <button type="submit" class="btn">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const auth0 = await createAuth0Client({
+    let auth0 = null;
+
+    async function initAuth0() {
+      auth0 = await createAuth0Client({
         domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
         client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
       });
 
-      const loginForm = document.getElementById('loginForm');
-      const signupButton = document.getElementById('btn-signup');
-      const googleButton = document.getElementById('btn-google');
-      const errorMessage = document.getElementById('error-message');
-
-      async function handleRedirectCallback() {
-        const query = window.location.search;
-        if (query.includes('code=') && query.includes('state=')) {
-          try {
-            await auth0.handleRedirectCallback();
-            window.history.replaceState({}, document.title, window.location.pathname);
-            const user = await auth0.getUser();
-            console.log('User:', user);
-          } catch (err) {
-            console.error('Redirect error:', err);
-            errorMessage.textContent = 'Redirect failed: ' + (err.error_description || err.message || 'Unknown error');
-            errorMessage.style.display = 'block';
-          }
-        }
-      }
-
       await handleRedirectCallback();
 
-      loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+      const isAuthenticated = await auth0.isAuthenticated();
+      if (isAuthenticated) {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('heartRatePage').style.display = 'block';
+      }
+    }
 
+    async function handleRedirectCallback() {
+      const query = window.location.search;
+      if (query.includes('code=') && query.includes('state=')) {
         try {
-          await auth0.loginWithRedirect({
-            redirect_uri: https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/,
-            username: email,
-            password: password
-          });
-        } catch (err) {
-          console.error('Login error:', err);
-          errorMessage.textContent = 'Login failed: ' + (err.error_description || err.message || 'Unknown error');
-          errorMessage.style.display = 'block';
+          await auth0.handleRedirectCallback();
+          window.history.replaceState({}, document.title, "/");
+          const user = await auth0.getUser();
+          console.log("User:", user);
+        } catch (error) {
+          console.error("Error during authentication:", error);
+          document.getElementById('loginError').textContent = "Login failed: " + (error.error_description || "Unknown error");
+          showLoginPage();
         }
-      });
+      }
+    }
 
-      signupButton.addEventListener('click', async () => {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    function showLoginPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'block';
+      document.getElementById('signUpPage').style.display = 'none';
+      document.getElementById('heartRatePage').style.display = 'none';
+    }
 
-        try {
-          await auth0.signupAndLogin({
-            connection: 'Username-Password-Authentication',
-            email: email,
-            password: password
-          });
-        } catch (err) {
-          console.error('Signup error:', err);
-          errorMessage.textContent = 'Signup failed: ' + (err.error_description || err.message || 'Unknown error');
-          errorMessage.style.display = 'block';
-        }
-      });
+    function showSignUpPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signUpPage').style.display = 'block';
+      document.getElementById('heartRatePage').style.display = 'none';
+    }
 
-      googleButton.addEventListener('click', async () => {
-        try {
-          await auth0.loginWithRedirect({
-            redirect_uri: https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/,
-            connection: 'google-oauth2'
-          });
-        } catch (err) {
-          console.error('Google login error:', err);
-          errorMessage.textContent = 'Google login failed: ' + (err.error_description || err.message || 'Unknown error');
-          errorMessage.style.display = 'block';
-        }
-      });
-    });
+    async function login(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/,
+          connection: 'Username-Password-Authentication',
+          username: email,
+          password: password
+        });
+      } catch (error) {
+        console.error("Login error:", error);
+        document.getElementById('loginError').textContent = "Login failed: " + (error.error_description || "Unknown error");
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    async function signup(event) {
+      event.preventDefault();
+      const email = document.getElementById('signUpEmail').value;
+      const password = document.getElementById('signUpPassword').value;
+
+      try {
+        await auth0.signup({
+          redirect_uri: window.location.origin,
+          connection: 'Username-Password-Authentication',
+          email: email,
+          password: password,
+        });
+        await auth0.loginWithRedirect({
+          redirect_uri: https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/,
+          connection: 'Username-Password-Authentication',
+          username: email,
+          password: password
+        });
+      } catch (error) {
+        console.error("Signup error:", error);
+        document.getElementById('signUpError').textContent = "Signup failed: " + (error.error_description || "Unknown error");
+        document.getElementById('signUpError').style.display = 'block';
+      }
+    }
+
+    async function loginWithGoogle() {
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin,
+          connection: 'google-oauth2'
+        });
+      } catch (error) {
+        console.error("Google login error:", error);
+        document.getElementById('loginError').textContent = "Google login failed: " + (error.error_description || "Unknown error");
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    window.onload = async () => {
+      await initAuth0();
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', login);
+    document.getElementById('signUpForm').addEventListener('submit', signup);
   </script>
 </body>
 </html>
+
