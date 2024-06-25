@@ -227,14 +227,13 @@
   </div>
 
   <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>  
-  <script src="public/js/app.js"></script>
   <script>
     let auth0 = null;
 
     async function initAuth0() {
       auth0 = await createAuth0Client({
-        domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
-        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
+        domain: 'YOUR_AUTH0_DOMAIN',
+        client_id: 'YOUR_AUTH0_CLIENT_ID'
       });
 
       await handleRedirectCallback();
