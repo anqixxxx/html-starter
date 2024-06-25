@@ -138,6 +138,8 @@
       margin-left: 20px;
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"></script>
 </head>
 
 <body>
@@ -226,41 +228,21 @@
     </div>
   </div>
 
-  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>  
-  <script src="public/js/app.js"></script>
   <script>
-    let auth0 = null;
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDf4yaXsG9ShvlAX4IVdGIPqPAypttqlPI",
+      authDomain: "pulsepals-fa684.firebaseapp.com",
+      projectId: "pulsepals-fa684",
+      storageBucket: "pulsepals-fa684.appspot.com",
+      messagingSenderId: "332323808828",
+      appId: "1:332323808828:web:d4e4f5c6ea5d53388ac539",
+      measurementId: "G-NCDQZWLPGG"    
+    };
 
-    async function initAuth0() {
-      auth0 = await createAuth0Client({
-        domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
-        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
-      });
-
-      await handleRedirectCallback();
-
-      const isAuthenticated = await auth0.isAuthenticated();
-      if (isAuthenticated) {
-        document.getElementById('homePage').style.display = 'none';
-        document.getElementById('heartRatePage').style.display = 'block';
-      }
-    }
-
-    async function handleRedirectCallback() {
-      const query = window.location.search;
-      if (query.includes('code=') && query.includes('state=')) {
-        try {
-          await auth0.handleRedirectCallback();
-          window.history.replaceState({}, document.title, "/");
-          const user = await auth0.getUser();
-          console.log("User:", user);
-        } catch (error) {
-          console.error("Error during authentication:", error);
-          document.getElementById('loginError').textContent = "Login failed: " + (error.error_description || "Unknown error");
-          showLoginPage();
-        }
-      }
-    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
     function showLoginPage() {
       document.getElementById('homePage').style.display = 'none';
@@ -282,15 +264,12 @@
       const password = document.getElementById('password').value;
 
       try {
-        await auth0.loginWithRedirect({
-          redirect_uri: window.location.origin,
-          connection: 'Username-Password-Authentication',
-          username: email,
-          password: password
-        });
+        await auth.signInWithEmailAndPassword(email, password);
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('heartRatePage').style.display = 'block';
       } catch (error) {
         console.error("Login error:", error);
-        document.getElementById('loginError').textContent = "Login failed: " + (error.error_description || "Unknown error");
+        document.getElementById('loginError').textContent = "Login failed: " + (error.message || "Unknown error");
         document.getElementById('loginError').style.display = 'block';
       }
     }
@@ -301,44 +280,42 @@
       const password = document.getElementById('signUpPassword').value;
 
       try {
-        await auth0.signup({
-          email: email,
-          password: password,
-          connection: 'Username-Password-Authentication'
-        });
-
-        await auth0.loginWithRedirect({
-          redirect_uri: window.location.origin
-        });
+        await auth.createUserWithEmailAndPassword(email, password);
+        document.getElementById('signUpPage').style.display = 'none';
+        document.getElementById('heartRatePage').style.display = 'block';
       } catch (error) {
         console.error("Signup error:", error);
-        document.getElementById('signUpError').textContent = "Signup failed: " + (error.error_description || "Unknown error");
+        document.getElementById('signUpError').textContent = "Signup failed: " + (error.message || "Unknown error");
         document.getElementById('signUpError').style.display = 'block';
       }
     }
 
     async function loginWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
       try {
-        await auth0.loginWithRedirect({
-          redirect_uri: window.location.origin,
-          connection: 'google-oauth2'
-        });
+        await auth.signInWithPopup(provider);
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('heartRatePage').style.display = 'block';
       } catch (error) {
         console.error("Google login error:", error);
-        document.getElementById('loginError').textContent = "Google login failed: " + (error.error_description || "Unknown error");
+        document.getElementById('loginError').textContent = "Google login failed: " + (error.message || "Unknown error");
         document.getElementById('loginError').style.display = 'block';
       }
     }
 
-    window.onload = async () => {
-      await initAuth0();
-    };
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('heartRatePage').style.display = 'block';
+      } else {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('heartRatePage').style.display = 'none';
+      }
+    });
 
     document.getElementById('loginForm').addEventListener('submit', login);
     document.getElementById('signUpForm').addEventListener('submit', signup);
   </script>
 </body>
 </html>
-
-
 
