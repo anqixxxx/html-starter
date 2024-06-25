@@ -138,7 +138,6 @@
       margin-left: 20px;
     }
   </style>
-  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
 </head>
 
 <body>
@@ -161,8 +160,51 @@
       </div>
     </div>
     <div class="cta">
-      <a href="#" class="btn" onclick="login()">Get Started</a>
-      <a href="#" class="btn" onclick="signup()">Sign Up</a>
+      <a href="#" class="btn" onclick="showLoginPage()">Get Started</a>
+      <a href="#" class="btn" onclick="showSignUpPage(); return false;">Sign Up</a>
+    </div>
+  </div>
+
+  <div class="container" id="loginPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Login to PulsePals</h2>
+        <div id="loginError" class="alert alert-danger" style="display:none;"></div>
+        <form id="loginForm">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required><br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required><br><br>
+          <button type="submit" class="btn">Login</button>
+        </form>
+        <button type="button" class="btn btn-default btn-block" onclick="loginWithGoogle()">Log In with Google</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="signUpPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Sign Up for PulsePals</h2>
+        <div id="signUpError" class="alert alert-danger" style="display:none;"></div>
+        <form id="signUpForm">
+          <label for="signUpEmail">Email:</label>
+          <input type="email" id="signUpEmail" name="email" required><br><br>
+          <label for="signUpPassword">Password:</label>
+          <input type="password" id="signUpPassword" name="password" required><br><br>
+          <button type="submit" class="btn">Sign Up</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -184,29 +226,23 @@
     </div>
   </div>
 
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>  
+  <script src="public/js/app.js"></script>
   <script>
     let auth0 = null;
 
     async function initAuth0() {
       auth0 = await createAuth0Client({
         domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
-        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ',
-        redirect_uri: "https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/"
+        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
       });
 
-      // Handle the authentication state
       await handleRedirectCallback();
 
-      // Check if the user is authenticated
       const isAuthenticated = await auth0.isAuthenticated();
       if (isAuthenticated) {
-        // Show the heart rate page
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('heartRatePage').style.display = 'block';
-      } else {
-        // Show the home page
-        document.getElementById('homePage').style.display = 'block';
-        document.getElementById('heartRatePage').style.display = 'none';
       }
     }
 
@@ -220,28 +256,86 @@
           console.log("User:", user);
         } catch (error) {
           console.error("Error during authentication:", error);
+          document.getElementById('loginError').textContent = "Login failed: " + (error.error_description || "Unknown error");
+          showLoginPage();
         }
       }
     }
 
-    function login() {
-      auth0.loginWithRedirect({
-        redirect_uri: "https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/"
-      });
+    function showLoginPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'block';
+      document.getElementById('signUpPage').style.display = 'none';
+      document.getElementById('heartRatePage').style.display = 'none';
     }
 
-    function signup() {
-      auth0.loginWithRedirect({
-        authorizationParams: {
-          screen_hint: 'signup'
-        },
-        redirect_uri: "https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/"
-      });
+    function showSignUpPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signUpPage').style.display = 'block';
+      document.getElementById('heartRatePage').style.display = 'none';
+    }
+
+    async function login(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin,
+          connection: 'Username-Password-Authentication',
+          username: email,
+          password: password
+        });
+      } catch (error) {
+        console.error("Login error:", error);
+        document.getElementById('loginError').textContent = "Login failed: " + (error.error_description || "Unknown error");
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    async function signup(event) {
+      event.preventDefault();
+      const email = document.getElementById('signUpEmail').value;
+      const password = document.getElementById('signUpPassword').value;
+
+      try {
+        await auth0.signup({
+          email: email,
+          password: password,
+          connection: 'Username-Password-Authentication'
+        });
+
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin
+        });
+      } catch (error) {
+        console.error("Signup error:", error);
+        document.getElementById('signUpError').textContent = "Signup failed: " + (error.error_description || "Unknown error");
+        document.getElementById('signUpError').style.display = 'block';
+      }
+    }
+
+    async function loginWithGoogle() {
+      try {
+        await auth0.loginWithRedirect({
+          redirect_uri: window.location.origin,
+          connection: 'google-oauth2'
+        });
+      } catch (error) {
+        console.error("Google login error:", error);
+        document.getElementById('loginError').textContent = "Google login failed: " + (error.error_description || "Unknown error");
+        document.getElementById('loginError').style.display = 'block';
+      }
     }
 
     window.onload = async () => {
       await initAuth0();
     };
+
+    document.getElementById('loginForm').addEventListener('submit', login);
+    document.getElementById('signUpForm').addEventListener('submit', signup);
   </script>
 </body>
 </html>
