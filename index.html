@@ -256,6 +256,7 @@
           var errorCode = error.code;
           var errorMessage = error.message;
           document.getElementById('loginError').innerText = errorMessage;
+          document.getElementById('loginError').style.display = 'block'; // Display the error message
         });
     }
 
@@ -275,6 +276,7 @@
           var errorCode = error.code;
           var errorMessage = error.message;
           document.getElementById('signupError').innerText = errorMessage;
+          document.getElementById('signUpError').style.display = 'block'; // Display the error message
         });
     }
 
