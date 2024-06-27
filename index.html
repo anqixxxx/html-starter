@@ -213,14 +213,13 @@
   <script>
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDf4yaXsG9ShvlAX4IVdGIPqPAypttqlPI",
-      authDomain: "pulsepals-fa684.firebaseapp.com",
-      projectId: "pulsepals-fa684",
-      storageBucket: "pulsepals-fa684.appspot.com",
-      messagingSenderId: "332323808828",
-      appId: "1:332323808828:web:d4e4f5c6ea5d53388ac539",
-      measurementId: "G-NCDQZWLPGG"
-    };
+        apiKey: "AIzaSyDf4yaXsG9ShvlAX4IVdGIPqPAypttqlPI",
+        authDomain: "pulsepals-fa684.firebaseapp.com",
+        projectId: "pulsepals-fa684",
+        storageBucket: "pulsepals-fa684.appspot.com",
+        messagingSenderId: "332323808828",
+        appId: "1:332323808828:web:d4e4f5c6ea5d53388ac539",
+        measurementId: "G-NCDQZWLPGG"    };
 
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
@@ -230,14 +229,12 @@
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'block';
       document.getElementById('signUpPage').style.display = 'none';
-      document.getElementById('heartRatePage').style.display = 'none';
     }
 
     function showSignUpPage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'none';
       document.getElementById('signUpPage').style.display = 'block';
-      document.getElementById('heartRatePage').style.display = 'none';
     }
 
     function login(event) {
@@ -262,8 +259,8 @@
 
     function signUp(event) {
       event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const email = document.getElementById('signUpEmail').value;
+      const password = document.getElementById('signUpPassword').value;
 
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
@@ -275,7 +272,7 @@
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          document.getElementById('signupError').innerText = errorMessage;
+          document.getElementById('signUpError').innerText = errorMessage;
           document.getElementById('signUpError').style.display = 'block'; // Display the error message
         });
     }
@@ -284,7 +281,7 @@
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
         await auth.signInWithPopup(provider);
-        console.log("User signed in with Google");
+        window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
       } catch (error) {
         console.error("Google login error:", error);
         document.getElementById('loginError').textContent = "Google login failed: " + (error.message || "Unknown error");
@@ -293,7 +290,7 @@
     }
 
     document.getElementById('loginForm').addEventListener('submit', login);
-    document.getElementById('signUpForm').addEventListener('submit', signup);
+    document.getElementById('signUpForm').addEventListener('submit', signUp);
   </script>
 </body>
 </html>
