@@ -5,141 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PulsePals - Your Health Companion</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <style>
-    body {
-      font-family: 'Times New Roman', Times, serif;
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .logo {
-      width: 150px;
-      margin-bottom: 10px;
-    }
-    .header h1 {
-      font-family: 'Times New Roman', Times, serif;
-      color: #003366;
-    }
-    .header p {
-      font-size: 1.2em;
-      color: #666;
-      font-family: 'Great Vibes', cursive;
-    }
-    .content {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .feature {
-      margin-bottom: 30px;
-      text-align: left;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      background-color: #cfe2ff;
-      position: relative;
-    }
-    .feature h2 {
-      color: #003366;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: 1.5em;
-    }
-    .feature p {
-      color: #333;
-    }
-    .heart-icon {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 2em;
-      color: #ff69b4;
-    }
-    .cta {
-      text-align: center;
-      margin-top: 30px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      width: calc(100% - 40px);
-      max-width: 500px;
-      background-color: #003366;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      border: none;
-      transition: background-color 0.3s ease;
-      text-align: center;
-      margin: 0 auto;
-    }
-    .btn:hover {
-      background-color: #001a33;
-    }
-    .form-container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      background-color: #cfe2ff;
-    }
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: #003366;
-    }
-    input[type="email"],
-    input[type="password"],
-    input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    .error {
-      color: red;
-      margin-bottom: 15px;
-    }
-    .summary {
-      text-align: left;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      background-color: #cfe2ff;
-      margin-bottom: 20px;
-    }
-    .summary h2 {
-      color: #003366;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: 1.5em;
-    }
-    .summary p {
-      color: #333;
-    }
-    .summary span {
-      font-weight: bold;
-    }
-    .summary ul {
-      margin-top: 10px;
-      margin-left: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <div class="container" id="homePage">
     <div class="header">
@@ -208,29 +75,8 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  <script src="auth.js"></script>
-
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyDf4yaXsG9ShvlAX4IVdGIPqPAypttqlPI",
-        authDomain: "pulsepals-fa684.firebaseapp.com",
-        projectId: "pulsepals-fa684",
-        storageBucket: "pulsepals-fa684.appspot.com",
-        messagingSenderId: "332323808828",
-        appId: "1:332323808828:web:d4e4f5c6ea5d53388ac539",
-        measurementId: "G-NCDQZWLPGG"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    db.settings({timeStampsInSnapshots: true});
+  <script type="module">
+    import { auth, db } from './auth.js';
 
     // Page navigation functions
     function showLoginPage() {
@@ -278,6 +124,25 @@
     }
 
     document.getElementById('loginForm').addEventListener('submit', login);
+
+    // Signup form submission
+    const signUpForm = document.querySelector('#signUpForm');
+    signUpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // get user info
+      const email = signUpForm['signUpEmail'].value;
+      const password = signUpForm['signUpPassword'].value;
+
+      // sign up the user
+      auth.createUserWithEmailAndPassword(email, password).then(cred => {
+        console.log(cred.user);
+        signUpForm.reset();
+        window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
+      }).catch((error) => {
+        document.getElementById('signUpError').innerText = error.message;
+        document.getElementById('signUpError').style.display = 'block'; // Display the error message
+      });
+    });
   </script>
 </body>
 </html>
