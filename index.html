@@ -139,143 +139,163 @@
     }
   </style>
 </head>
-  
+
 <body>
-  <div class="container" id="homePage">
-    <div class="header">
-      &#10084; <!-- Heart Icon -->
-      <h1>PulsePals</h1>
-      <p>Your Health Companion</p>
-    </div>
-    <div class="content">
-      <div class="feature">
-        <span class="heart-icon">♥</span>
-        <h2>Generate Your Health Analysis</h2>
-        <p>Connect Your Smartwatch for Personalized Insights: Easily input your health data to our website and unlock detailed analysis, empowering you to make informed decisions about your well-being!</p>
+    <div class="container" id="homePage">
+      <div class="header">
+        &#10084; <!-- Heart Icon -->
+        <h1>PulsePals</h1>
+        <p>Your Health Companion</p>
       </div>
-      <div class="feature">
-        <span class="heart-icon">♥</span>
-        <h2>Goal Tracking</h2>
-        <p>Track Your Progress and Achieve Your Goals: Set, monitor, and achieve your health and fitness goals effortlessly. Stay motivated with clear progress updates and personalized milestones.</p>
+      <div class="content">
+        <div class="feature">
+          <span class="heart-icon">♥</span>
+          <h2>Generate Your Health Analysis</h2>
+          <p>Connect Your Smartwatch for Personalized Insights: Easily input your health data to our website and unlock detailed analysis, empowering you to make informed decisions about your well-being!</p>
+        </div>
+        <div class="feature">
+          <span class="heart-icon">♥</span>
+          <h2>Goal Tracking</h2>
+          <p>Track Your Progress and Achieve Your Goals: Set, monitor, and achieve your health and fitness goals effortlessly. Stay motivated with clear progress updates and personalized milestones.</p>
+        </div>
       </div>
-    </div>
-    <div class="cta">
-      <a href="#" class="btn" onclick="showLoginPage()">Get Started</a>
-      <a href="#" class="btn" onclick="showSignUpPage(); return false;">Sign Up</a>
-    </div>
-  </div>
-
-  <div class="container" id="loginPage" style="display: none;">
-    <div class="header">
-      &#10084; <!-- Heart Icon -->
-      <h1>PulsePals</h1>
-      <p>Your Health Companion</p>
-    </div>
-    <div class="content">
-      <div class="form-container">
-        <h2>Login to PulsePals</h2>
-        <div id="loginError" class="alert alert-danger" style="display:none;"></div>
-        <form id="loginForm">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required><br><br>
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required><br><br>
-          <button type="submit" class="btn">Login</button>
-        </form>
-        <button type="button" class="btn btn-default btn-block" onclick="loginWithGoogle()">Log In with Google</button>
+      <div class="cta">
+        <a href="#" class="btn" onclick="showLoginPage()">Get Started</a>
+        <a href="#" class="btn" onclick="showSignUpPage(); return false;">Sign Up</a>
       </div>
     </div>
-  </div>
-
-  <div class="container" id="signUpPage" style="display: none;">
-    <div class="header">
-      &#10084; <!-- Heart Icon -->
-      <h1>PulsePals</h1>
-      <p>Your Health Companion</p>
-    </div>
-    <div class="content">
-      <div class="form-container">
-        <h2>Sign Up for PulsePals</h2>
-        <div id="signUpError" class="alert alert-danger" style="display:none;"></div>
-        <form id="signUpForm">
-          <label for="signUpEmail">Email:</label>
-          <input type="email" id="signUpEmail" name="email" required><br><br>
-          <label for="signUpPassword">Password:</label>
-          <input type="password" id="signUpPassword" name="password" required><br><br>
-          <button type="submit" class="btn">Sign Up</button>
-        </form>
+  
+    <div class="container" id="loginPage" style="display: none;">
+      <div class="header">
+        &#10084; <!-- Heart Icon -->
+        <h1>PulsePals</h1>
+        <p>Your Health Companion</p>
+      </div>
+      <div class="content">
+        <div class="form-container">
+          <h2>Login to PulsePals</h2>
+          <div id="loginError" class="alert alert-danger" style="display:none;"></div>
+          <form id="loginForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit" class="btn">Login</button>
+          </form>
+          <button type="button" id="googleLoginButton" class="btn btn-default btn-block">Log In with Google</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <script type="module">
-    import { auth, db } from 'auth.js';
-
-    // Page navigation functions
-    function showLoginPage() {
-      document.getElementById('homePage').style.display = 'none';
-      document.getElementById('loginPage').style.display = 'block';
-      document.getElementById('signUpPage').style.display = 'none';
-    }
-
-    function showSignUpPage() {
-      document.getElementById('homePage').style.display = 'none';
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('signUpPage').style.display = 'block';
-    }
-
-    function login(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in 
-          var user = userCredential.user;
-          // Redirect to the next page
-          window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          document.getElementById('loginError').innerText = errorMessage;
-          document.getElementById('loginError').style.display = 'block'; // Display the error message
+  
+    <div class="container" id="signUpPage" style="display: none;">
+      <div class="header">
+        &#10084; <!-- Heart Icon -->
+        <h1>PulsePals</h1>
+        <p>Your Health Companion</p>
+      </div>
+      <div class="content">
+        <div class="form-container">
+          <h2>Sign Up for PulsePals</h2>
+          <div id="signUpError" class="alert alert-danger" style="display:none;"></div>
+          <form id="signUpForm">
+            <label for="signUpEmail">Email:</label>
+            <input type="email" id="signUpEmail" name="email" required><br><br>
+            <label for="signUpPassword">Password:</label>
+            <input type="password" id="signUpPassword" name="password" required><br><br>
+            <button type="submit" class="btn">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDf4yaXsG9ShvlAX4IVdGIPqPAypttqlPI",
+        authDomain: "pulsepals-fa684.firebaseapp.com",
+        projectId: "pulsepals-fa684",
+        storageBucket: "pulsepals-fa684.appspot.com",
+        messagingSenderId: "332323808828",
+        appId: "1:332323808828:web:926868c9d76ab22a8ac539",
+        measurementId: "G-ZLJM10C0BD"      
+      };
+  
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+  
+      document.addEventListener('DOMContentLoaded', function() {
+        // Page navigation functions
+        window.showLoginPage = function() {
+          document.getElementById('homePage').style.display = 'none';
+          document.getElementById('loginPage').style.display = 'block';
+          document.getElementById('signUpPage').style.display = 'none';
+        }
+  
+        window.showSignUpPage = function() {
+          document.getElementById('homePage').style.display = 'none';
+          document.getElementById('loginPage').style.display = 'none';
+          document.getElementById('signUpPage').style.display = 'block';
+        }
+  
+        // Login function
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+  
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              // Signed in
+              var user = userCredential.user;
+              // Redirect to the specific page
+              window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
+            })
+            .catch((error) => {
+              var errorMessage = error.message;
+              document.getElementById('loginError').innerText = errorMessage;
+              document.getElementById('loginError').style.display = 'block';
+            });
         });
-    }
-
-    async function loginWithGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      try {
-        await auth.signInWithPopup(provider);
-        window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
-      } catch (error) {
-        console.error("Google login error:", error);
-        document.getElementById('loginError').textContent = "Google login failed: " + (error.message || "Unknown error");
-        document.getElementById('loginError').style.display = 'block';
-      }
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', login);
-
-    // Signup form submission
-    const signUpForm = document.querySelector('#signUpForm');
-    signUpForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // get user info
-      const email = signUpForm['signUpEmail'].value;
-      const password = signUpForm['signUpPassword'].value;
-
-      // sign up the user
-      auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        console.log(cred.user);
-        signUpForm.reset();
-        window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
-      }).catch((error) => {
-        document.getElementById('signUpError').innerText = error.message;
-        document.getElementById('signUpError').style.display = 'block'; // Display the error message
+  
+        // Sign Up function
+        document.getElementById('signUpForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const email = document.getElementById('signUpEmail').value;
+          const password = document.getElementById('signUpPassword').value;
+  
+          createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              // Signed up
+              var user = userCredential.user;
+              // Redirect to the specific page
+              window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
+            })
+            .catch((error) => {
+              var errorMessage = error.message;
+              document.getElementById('signUpError').innerText = errorMessage;
+              document.getElementById('signUpError').style.display = 'block';
+            });
+        });
+  
+        // Google login function
+        document.getElementById('googleLoginButton').addEventListener('click', function() {
+          const provider = new GoogleAuthProvider();
+          signInWithPopup(auth, provider)
+            .then((result) => {
+              // Google sign-in successful
+              window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
+            })
+            .catch((error) => {
+              document.getElementById('loginError').innerText = "Google login failed: " + error.message;
+              document.getElementById('loginError').style.display = 'block';
+            });
+        });
       });
-    });
-  </script>
+    </script>
 </body>
 </html>
+  
