@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PulsePals - Your Health Companion</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <style>
     body {
       font-family: 'Times New Roman', Times, serif;
@@ -13,6 +13,7 @@
       padding: 0;
       background-color: #ffffff;
     }
+
     .container {
       max-width: 1200px;
       margin: 20px auto;
@@ -21,27 +22,33 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
     }
+
     .header {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .logo {
       width: 150px;
       margin-bottom: 10px;
     }
+
     .header h1 {
       font-family: 'Times New Roman', Times, serif;
       color: #003366;
     }
+
     .header p {
       font-size: 1.2em;
       color: #666;
       font-family: 'Great Vibes', cursive;
     }
+
     .content {
       text-align: center;
       margin-bottom: 30px;
     }
+
     .feature {
       margin-bottom: 30px;
       text-align: left;
@@ -51,14 +58,17 @@
       background-color: #cfe2ff;
       position: relative;
     }
+
     .feature h2 {
       color: #003366;
       font-family: 'Times New Roman', Times, serif;
       font-size: 1.5em;
     }
+
     .feature p {
       color: #333;
     }
+
     .heart-icon {
       position: absolute;
       top: 20px;
@@ -66,10 +76,12 @@
       font-size: 2em;
       color: #ff69b4;
     }
+
     .cta {
       text-align: center;
       margin-top: 30px;
     }
+
     .btn {
       display: inline-block;
       padding: 10px 20px;
@@ -84,9 +96,11 @@
       text-align: center;
       margin: 0 auto;
     }
+
     .btn:hover {
       background-color: #001a33;
     }
+
     .form-container {
       max-width: 400px;
       margin: 0 auto;
@@ -95,11 +109,13 @@
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
       background-color: #cfe2ff;
     }
+
     label {
       display: block;
       margin-bottom: 10px;
       color: #003366;
     }
+
     input[type="email"],
     input[type="password"],
     input[type="number"] {
@@ -110,10 +126,7 @@
       border: 1px solid #ccc;
       box-sizing: border-box;
     }
-    .error {
-      color: red;
-      margin-bottom: 15px;
-    }
+
     .summary {
       text-align: left;
       padding: 20px;
@@ -122,17 +135,21 @@
       background-color: #cfe2ff;
       margin-bottom: 20px;
     }
+
     .summary h2 {
       color: #003366;
       font-family: 'Times New Roman', Times, serif;
       font-size: 1.5em;
     }
+
     .summary p {
       color: #333;
     }
+
     .summary span {
       font-weight: bold;
     }
+
     .summary ul {
       margin-top: 10px;
       margin-left: 20px;
@@ -174,7 +191,6 @@
     <div class="content">
       <div class="form-container">
         <h2>Login to PulsePals</h2>
-        <div id="loginError" class="alert alert-danger" style="display:none;"></div>
         <form id="loginForm">
           <label for="email">Email:</label>
           <input type="email" id="email" name="email" required><br><br>
@@ -182,7 +198,6 @@
           <input type="password" id="password" name="password" required><br><br>
           <button type="submit" class="btn">Login</button>
         </form>
-        <button type="button" class="btn btn-default btn-block" onclick="loginWithGoogle()">Log In with Google</button>
       </div>
     </div>
   </div>
@@ -196,7 +211,6 @@
     <div class="content">
       <div class="form-container">
         <h2>Sign Up for PulsePals</h2>
-        <div id="signUpError" class="alert alert-danger" style="display:none;"></div>
         <form id="signUpForm">
           <label for="signUpEmail">Email:</label>
           <input type="email" id="signUpEmail" name="email" required><br><br>
@@ -208,90 +222,222 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <div class="container" id="heartRatePage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="form-container">
+        <h2>Enter Your Average Heart Rate</h2>
+        <form id="heartRateForm">
+          <label for="heartRate">Average Heart Rate (bpm):</label>
+          <input type="number" id="heartRate" name="heartRate" required><br><br>
+          <button type="submit" class="btn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="healthSummaryPage" style="display: none;">
+    <div class="header">
+      &#10084; <!-- Heart Icon -->
+      <h1>PulsePals</h1>
+      <p>Your Health Companion</p>
+    </div>
+    <div class="content">
+      <div class="summary">
+        <h2>Health Summary</h2>
+        <p><span>Steps Taken:</span> 10,000</p>
+        <p><span>Heart Rate:</span> 72 bpm</p>
+        <p><span>Heartbeats Count Per Minute:</span> 87</p>
+        <p><span>Moods Experienced Throughout the Day:</span></p>
+        <ul>
+          <li>Excited</li>
+          <li>Happy</li>
+          <li>Exhausted</li>
+          <p><span>. . . </span></p>
+        </ul>
+      </div>
+      <div class="cta">
+        <a href="#" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
   <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_FIREBASE_API_KEY",
-      authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-      projectId: "YOUR_FIREBASE_PROJECT_ID",
-      storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-      appId: "YOUR_FIREBASE_APP_ID",
-      measurementId: "YOUR_FIREBASE_MEASUREMENT_ID"
+    let auth0 = null;
+
+    async function initAuth0() {
+        auth0 = await createAuth0Client({
+            domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
+            client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ'
+        });
+    }
+
+    window.onload = async () => {
+        await initAuth0();
     };
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    document.addEventListener('DOMContentLoaded', async () => {
+      const auth0 = await createAuth0Client({
+        domain: 'dev-doizuip1rh4wvs74.us.auth0.com',
+        client_id: 'H6KFrzrUWh7tV4e8rnlpM2CVvoadiPxQ',
+        redirect_uri: 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/'
+      });
+  
+      document.getElementById('loginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+  
+        try {
+          await auth0.loginWithRedirect({
+            redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
+            audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
+            scope: 'openid email',
+            response_type: 'code',
+            realm: 'Username-Password-Authentication',
+            username: email,
+            password: password
+          });
+          console.log('Login successful');
+        } catch (error) {
+          console.error('Error logging in:', error);
+          alert('Error logging in: ' + error.message);
+        }
+      });
+    });
 
+    // Page navigation functions
     function showLoginPage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'block';
       document.getElementById('signUpPage').style.display = 'none';
+      document.getElementById('heartRatePage').style.display = 'none';
+      document.getElementById('healthSummaryPage').style.display = 'none';
     }
 
     function showSignUpPage() {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('signUpPage').style.display = 'block';
+        document.getElementById('heartRatePage').style.display = 'none';
+        document.getElementById('healthSummaryPage').style.display = 'none';
+
+        document.getElementById('signUpForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+
+            try {
+                await auth0.loginWithRedirect({
+                    redirect_uri: 'https://ppheartrate-w8xmnlqzy-anqis-projects-d8885076.vercel.app/',
+                    audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
+                    scope: 'openid email',
+                    response_type: 'code',
+                    realm: 'Username-Password-Authentication',
+                    username: email,
+                    password: password
+                });
+            } catch (error) {
+                console.error('Error signing up:', error);
+                alert('Error signing up: ' + error.message);
+            }
+        });
+    }
+
+    function showHeartRatePage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('signUpPage').style.display = 'block';
+      document.getElementById('signUpPage').style.display = 'none';
+      document.getElementById('heartRatePage').style.display = 'block';
+      document.getElementById('healthSummaryPage').style.display = 'none';
     }
 
-    function login(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    function showHealthSummaryPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signUpPage').style.display = 'none';
+      document.getElementById('heartRatePage').style.display = 'none';
+      document.getElementById('healthSummaryPage').style.display = 'block';
+    }
 
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in 
-          var user = userCredential.user;
-          // Redirect to the next page
-          window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          document.getElementById('loginError').innerText = errorMessage;
-          document.getElementById('loginError').style.display = 'block'; // Display the error message
+    // Firebase Authentication
+  document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+        await auth0.loginWithRedirect({
+        redirect_uri: 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/',
+        audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
+        scope: 'openid email',
+        response_type: 'code',
+        realm: 'Username-Password-Authentication',
+        username: email,
+        password: password
         });
+        console.log('Login successful');
+    } catch (error) {
+        console.error('Error logging in:', error);
+        alert('Error logging in: ' + error.message);
     }
+  });
 
-    function signUp(event) {
-      event.preventDefault();
-      const email = document.getElementById('signUpEmail').value;
-      const password = document.getElementById('signUpPassword').value;
+  document.getElementById('signupForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in 
-          var user = userCredential.user;
-          // Redirect to the next page
-          window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          document.getElementById('signUpError').innerText = errorMessage;
-          document.getElementById('signUpError').style.display = 'block'; // Display the error message
+    try {
+        await auth0.signup({
+            connection: 'Username-Password-Authentication',
+            email: email,
+            password: password
         });
-    }
 
-    async function loginWithGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      try {
-        await auth.signInWithPopup(provider);
-        window.location.href = 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/';
-      } catch (error) {
-        console.error("Google login error:", error);
-        document.getElementById('loginError').textContent = "Google login failed: " + (error.message || "Unknown error");
-        document.getElementById('loginError').style.display = 'block';
-      }
+        console.log('Signup successful');
+        // After successful signup, you can redirect the user to the login page
+        auth0.loginWithRedirect({
+            redirect_uri: 'https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/',
+            audience: 'dev-doizuip1rh4wvs74.us.auth0.com',
+            scope: 'openid email',
+            response_type: 'code',
+            realm: 'Username-Password-Authentication',
+            username: email,
+            password: password
+        });
+    } catch (error) {
+    console.error('Error signing up:', error);
+    alert('Error signing up: ' + error.message);
     }
+  });
+  </script>
+    
 
-    document.getElementById('loginForm').addEventListener('submit', login);
-    document.getElementById('signUpForm').addEventListener('submit', signUp);
+  <script>
+    var config = JSON.parse(decodeURIComponent(escape(window.atob('@@config@@'))));
+    config.extraParams = config.extraParams || {};
+    var connection = config.connection;
+    var prompt = config.prompt;
+    var languageDictionary;
+    var language;
+  
+    if (config.dict && config.dict.signin && config.dict.signin.title) {
+      languageDictionary = { title: config.dict.signin.title };
+    } else if (typeof config.dict === 'string') {
+      language = config.dict;
+    }
+    var loginHint = config.extraParams.login_hint;
+  
+    // Add this line
+    config.redirectUri = "https://ppheartrate-5im9qopxv-anqis-projects-d8885076.vercel.app/";
+  
   </script>
 </body>
+
 </html>
