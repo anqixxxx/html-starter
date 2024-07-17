@@ -110,10 +110,19 @@
       </div>
     </div>
     <div class="cta">
-      <a href="https://getstarted-page.vercel.app" class="btn">Get Started</a>
-      <a href="https://signup-page-wheat.vercel.app" class="btn">Sign Up</a>
+      <button onclick="navigateToGetStarted()" class="btn">Get Started</button>
+      <button onclick="navigateToSignUp()" class="btn">Sign Up</button>
     </div>
   </div>
+
+  <script>
+    function navigateToGetStarted() {
+      window.location.href = 'https://getstarted-page.vercel.app';
+    }
+
+    function navigateToSignUp() {
+      window.location.href = 'https://signup-page-wheat.vercel.app';
+    }
   </script>
 </body>
 </html>
